@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="/carrito.css">
+</head>
+<body>
+
+<p>Hola, <span th:text="${nombre}"></span></p>
+<form action="/cerrarSession" method="post" style="display:inline">
+    <button type="submit">Cerrar Sesión</button>
+</form>
+
+<nav>
+    <a th:href="@{/carrito}">Comprar</a>
+    <a th:href="@{/venta}">Ventas Realizadas</a>
+    <a th:href="@{/administrar}">Administrar Producto</a>
+    <a th:href="@{/compra}" id="carrito-link">Carrito</a>
+
+</nav>
+
+<table>
+    <thead>
+    <tr>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Agregar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${productos}">
+        <td>
+            <img th:each="foto : ${p.fotos}"
+                 th:src="'data:image/jpeg;base64,' + ${foto.fotoBase64}"
+                 width="100"/>
+        </td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.precio}"></td>
+        <td th:text="${p.cantidad}"></td>
+        <td>
+            <a th:href="@{/comentario/{nombre}(nombre=${p.name})}">Ver Detalle</a>
+        </td>
+        <td>
+            <form th:action="@{/agregar}" method="post">
+                <input type="hidden" name="productoId" th:value="${p.name}"/>
+                <input type="number" name="cantidad" value="1" min="1"/>
+                <button type="submit">Agregar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="pagination">
+    <!-- Previous button -->
+    <a th:if="${paginaActual > 1}"
+       th:href="@{/carrito(pagina=${paginaActual - 1})}"
+       class="page-btn">← Anterior</a>
+
+    <span th:if="${paginaActual == 1}" class="page-btn disabled">← Anterior</span>
+
+    <!-- Page numbers -->
+    <span th:each="i : ${#numbers.sequence(1, totalPaginas)}"
+          th:class="${i == paginaActual} ? 'page-btn active' : 'page-btn'">
+        <a th:if="${i != paginaActual}"
+           th:href="@{/carrito(pagina=${i})}"
+           th:text="${i}"></a>
+        <span th:if="${i == paginaActual}" th:text="${i}"></span>
+    </span>
+
+    <!-- Next button -->
+    <a th:if="${paginaActual < totalPaginas}"
+       th:href="@{/carrito(pagina=${paginaActual + 1})}"
+       class="page-btn">Siguiente →</a>
+
+    <span th:if="${paginaActual == totalPaginas}" class="page-btn disabled">Siguiente →</span>
+</div>
+
+</body>
+</html>

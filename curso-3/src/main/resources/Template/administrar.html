@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar</title>
+    <link rel="stylesheet" href="/administrar.css">
+</head>
+<body>
+
+<nav>
+    <a th:href="@{/carrito}">Comprar</a>
+    <a th:href="@{/venta}">Ventas Realizadas</a>
+    <a th:href="@{/administrar}">Administrar Producto</a>
+    <a th:href="@{/compra}">Carrito (0)</a>
+</nav>
+
+<p>Agrege su producto</p>
+
+<form th:action="@{/agregarProduct}" method="post" enctype="multipart/form-data">
+    <label>Nombre</label>
+    <input type="text" name="nombre" required/>
+    <label>Descripcion</label>
+    <input type="text" name="descripcion" required/>
+    <label>Precio</label>
+    <input type="number" name="precio" required/>
+    <label>Cantidad</label>
+    <input type="number" name="cantidad" required/>
+    <label>Foto</label>
+    <input type="file" name="fotos" accept="image/*" multiple required/>
+    <button type="submit">Crear</button>
+</form>
+
+<p>Actualizar item</p>
+<form th:action="@{/actualizarProd}" method="post">
+    <label>Nombre</label>
+    <input type="text" name="nombre" />
+    <label>Descripcion</label>
+    <input type="text" name="descripcion" />
+    <label>Precio</label>
+    <input type="number" name="precio" />
+    <label>Cantidad</label>
+    <input type="number" name="cantidad"/>
+    <label>Foto</label>
+    <input type="file" name="fotos" accept="image/*" multiple required/>
+    <button type="submit">Actualizar</button>
+</form>
+
+<p>Eliminar su producto</p>
+<table id="tabla-productos">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Acción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${productos}">
+        <td th:text="${p.name}"></td>
+        <td>
+            <form th:action="@{/EliminarProd}" method="post">
+                <input type="hidden" name="nombre" th:value="${p.name}"/>
+                <button type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

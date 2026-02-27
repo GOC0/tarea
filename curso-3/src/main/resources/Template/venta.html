@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas Realizadas</title>
+    <link rel="stylesheet" href="/venta.css">
+</head>
+<body>
+
+<p>Hola, <span th:text="${nombre}"></span></p>
+
+<nav>
+    <a th:href="@{/carrito}">Comprar</a>
+    <a th:href="@{/ventas}">Ventas Realizadas</a>
+    <a th:href="@{/administrar}">Administrar Producto</a>
+    <a th:href="@{/compra}">Carrito</a>
+</nav>
+
+<table>
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Productos</th>
+        <th>Precio</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="v : ${ventas}">
+        <td th:text="${v.fecha != null ? v.fecha : 'Sin fecha'}"></td>
+        <td>
+                <span th:each="p : ${v.productos}"
+                      th:text="${p.name} + ' '"></span>
+        </td>
+        <td>
+                <span th:each="p : ${v.productos}"
+                      th:text="${p.precio} + ' '"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

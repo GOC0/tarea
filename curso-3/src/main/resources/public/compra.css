@@ -1,0 +1,330 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:           #f5f5f5;
+  --surface:      #ffffff;
+  --border:       #e0e0e0;
+  --accent:       #ff6b00;
+  --accent-hover: #e05e00;
+  --accent-light: rgba(255, 107, 0, 0.08);
+  --text:         #1c1c1c;
+  --text-muted:   #888888;
+  --green:        #1a9e5c;
+  --red:          #e53935;
+  --red-hover:    #c62828;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text);
+}
+
+/* ===========================
+   TOP BAR GRADIENT
+   =========================== */
+body::before {
+  content: '';
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), #ffad00);
+}
+
+/* ===========================
+   GREETING
+   =========================== */
+body > p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding: 0.75rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+}
+
+body > p span {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ===========================
+   NAV
+   =========================== */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 1.5rem;
+  background: #1c1c1c;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+nav::before {
+  content: '🛒 Tu Carrito';
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-right: auto;
+  padding: 1rem 0;
+}
+
+nav a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  padding: 1.1rem 1rem;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+nav a:hover {
+  color: #fff;
+  border-bottom-color: var(--accent);
+}
+
+/* ===========================
+   PAGE TITLE
+   =========================== */
+h2 {
+  max-width: 1040px;
+  margin: 2rem auto 1rem;
+  padding: 0 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+/* ===========================
+   TABLE WRAPPER
+   =========================== */
+body > table {
+  display: block;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+body > table thead,
+body > table tbody {
+  display: block;
+}
+
+/* ===========================
+   TABLE HEADER
+   =========================== */
+body > table thead tr {
+  display: grid;
+  grid-template-columns: 1fr 140px 120px;
+  padding: 0.6rem 1rem;
+  background: #f0f0f0;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+
+thead th {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+}
+
+thead th:last-child { text-align: center; }
+
+/* ===========================
+   CART ROWS
+   =========================== */
+tbody tr {
+  display: grid;
+  grid-template-columns: 1fr 140px 120px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 0.85rem 1rem;
+  transition: background 0.15s, box-shadow 0.15s;
+  animation: rowIn 0.35s ease both;
+}
+
+tbody tr:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+tbody tr:nth-child(1) { animation-delay: 0.05s; }
+tbody tr:nth-child(2) { animation-delay: 0.10s; }
+tbody tr:nth-child(3) { animation-delay: 0.15s; }
+tbody tr:nth-child(4) { animation-delay: 0.20s; }
+tbody tr:nth-child(5) { animation-delay: 0.25s; }
+
+tbody tr:hover {
+  background: #fffaf7;
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+
+tbody td {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* Nombre */
+tbody td:nth-child(1) {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Precio */
+tbody td:nth-child(2) {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--green);
+}
+
+tbody td:nth-child(2)::before {
+  content: 'RD$';
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 2px;
+  vertical-align: super;
+}
+
+/* Eliminar */
+tbody td:nth-child(3) {
+  text-align: center;
+}
+
+/* ===========================
+   FORMS & BUTTONS
+   =========================== */
+form {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Eliminar button — red */
+tbody button[type="submit"] {
+  padding: 0.45rem 0.9rem;
+  background: transparent;
+  border: 1.5px solid var(--red);
+  border-radius: 6px;
+  color: var(--red);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+tbody button[type="submit"]:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+/* ===========================
+   CONFIRM PURCHASE BUTTON
+   =========================== */
+.confirm-wrap {
+  max-width: 1040px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+body > form {
+  max-width: 1040px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+body > form button[type="submit"] {
+  padding: 0.75rem 2rem;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
+  letter-spacing: 0.02em;
+}
+
+body > form button[type="submit"]::before {
+  content: '✓ ';
+}
+
+body > form button[type="submit"]:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 107, 0, 0.4);
+}
+
+body > form button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ===========================
+   EMPTY CART MESSAGE
+   =========================== */
+.empty-cart {
+  max-width: 1040px;
+  margin: 3rem auto;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ===========================
+   SCROLLBAR
+   =========================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+@keyframes rowIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 680px) {
+  nav { padding: 0 1rem; }
+  nav a { font-size: 0.7rem; padding: 0.9rem 0.6rem; }
+
+  body > table { padding: 0 1rem; }
+
+  body > table thead tr,
+  tbody tr {
+    grid-template-columns: 1fr 100px 90px;
+  }
+
+  body > form { padding: 0 1rem; }
+  body > form button[type="submit"] { width: 100%; justify-content: center; }
+}
+

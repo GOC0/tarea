@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${producto.name}">Detalle</title>
+    <link rel="stylesheet" href="/comentario.css">
+</head>
+<body>
+
+<nav>
+    <a th:href="@{/carrito}">← Volver a Productos</a>
+    <a th:href="@{/compra}">Carrito</a>
+    <a th:href="@{/administrar}">Administrar</a>
+</nav>
+
+<div class="producto-detalle">
+    <div class="fotos">
+        <img th:each="foto : ${producto.fotos}"
+             th:src="'data:image/jpeg;base64,' + ${foto.fotoBase64}"
+             width="300"/>
+    </div>
+    <div class="info">
+        <h1 th:text="${producto.name}"></h1>
+        <p class="descripcion" th:text="${producto.descripcion}"></p>
+        <p class="precio" th:text="${producto.precio}"></p>
+
+        <form th:action="@{/agregar}" method="post">
+            <input type="hidden" name="productoId" th:value="${producto.name}"/>
+            <input type="number" name="cantidad" value="1" min="1"/>
+            <button type="submit">Agregar al Carrito</button>
+        </form>
+    </div>
+</div>
+
+<div class="comentarios-section">
+    <h2>Comentarios</h2>
+
+    <div th:if="${comentarios.isEmpty()}">
+        <p>No hay comentarios aún. ¡Sé el primero!</p>
+    </div>
+
+    <div th:each="c : ${comentarios}" class="comentario-card">
+        <div class="comentario-header">
+            <span class="autor" th:text="${c.autor}"></span>
+            <span class="fecha" th:text="${c.fecha}"></span>
+        </div>
+        <p class="mensaje" th:text="${c.mensaje}"></p>
+
+        <form th:if="${isAdmin}" th:action="@{/eliminarComentario}" method="post">
+            <input type="hidden" name="comentarioId" th:value="${c.id}"/>
+            <input type="hidden" name="productoNombre" th:value="${producto.name}"/>
+            <button type="submit" class="btn-eliminar">Eliminar</button>
+        </form>
+    </div>
+
+    <h3>Dejar un Comentario</h3>
+    <form th:action="@{/agregarComentario}" method="post" class="form-comentario">
+        <input type="hidden" name="productoNombre" th:value="${producto.name}"/>
+        <textarea name="mensaje" placeholder="Escribe tu comentario..."
+                  rows="3" required></textarea>
+        <button type="submit">Comentar</button>
+    </form>
+</div>
+
+</body>
+</html>
