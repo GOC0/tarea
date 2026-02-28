@@ -29,7 +29,9 @@ public class Main {
         User admin = userD.buscarPorNombre("admin");
         if (admin == null) {
             User usuario = new User("admin", "1234",true);
+            User nuevo = new User("cliente", "1234");
             userD.crear(usuario);
+            UserD.crear(nuevo);
             System.out.println("Usuario admin creado por defecto.");
         } else {
             System.out.println("Usuario admin ya existe.");
